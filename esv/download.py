@@ -7,6 +7,7 @@ import os
 import aqt
 import logging
 import urllib
+import re
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from aqt import mw
@@ -14,7 +15,7 @@ from anki.hooks import addHook, wrap
 from anki.utils import stripHTML, namedtmp
 import aqt.editor
 # from pprint import pformat
-# from aqt.utils import showInfo
+from aqt.utils import showInfo
 
 DECK_NAME = u'Mike_Verses'
 REF_FIELD = u'Ref'
@@ -85,6 +86,7 @@ class EsvSession:
       return page.read()
 
    def query(self, ref="John 1:1"):
+      ref = re.sub(r'<.*?>', '', ref)
       result1 = self.doPassageQuery2(ref)
       if result1.find("ERROR")>=0:
          self.bErrorFlag=True
